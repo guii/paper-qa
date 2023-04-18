@@ -1,7 +1,7 @@
 import langchain.prompts as prompts
 from datetime import datetime
 from langchain.chains import LLMChain
-from langchain.chat_models import ChatOpenAI
+from langchain.chat_models import AzureChatOpenAI
 from langchain.schema import SystemMessage
 from langchain.prompts.chat import HumanMessagePromptTemplate, ChatPromptTemplate
 
@@ -75,7 +75,7 @@ citation_prompt = prompts.PromptTemplate(
 
 
 def make_chain(prompt, llm):
-    if type(llm) == ChatOpenAI:
+    if type(llm) == AzureChatOpenAI:
         system_message_prompt = SystemMessage(
             content="You are a scholarly researcher that answers in an unbiased, scholarly tone. "
             "You sometimes refuse to answer if there is insufficient information.",

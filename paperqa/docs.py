@@ -20,7 +20,7 @@ from .readers import read_doc
 from langchain.vectorstores import FAISS
 from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.embeddings.base import Embeddings
-from langchain.chat_models import ChatOpenAI
+from langchain.chat_models import AzureChatOpenAI
 from langchain.llms.base import LLM
 from langchain.callbacks import get_openai_callback
 from langchain.cache import SQLiteCache
@@ -75,9 +75,9 @@ class Docs:
         if llm is None:
             llm = "gpt-3.5-turbo"
         if type(llm) is str:
-            llm = ChatOpenAI(temperature=0.1, model=llm)
+            llm = AzureChatOpenAI(temperature=0.1, model=llm)
         if type(summary_llm) is str:
-            summary_llm = ChatOpenAI(temperature=0.1, model=summary_llm)
+            summary_llm = AzureChatOpenAI(temperature=0.1, model=summary_llm)
         self.llm = llm
         if summary_llm is None:
             summary_llm = llm

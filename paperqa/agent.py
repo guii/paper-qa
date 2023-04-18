@@ -1,7 +1,7 @@
 from langchain.tools import BaseTool
 from .docs import Answer, Docs
 from langchain.agents import initialize_agent
-from langchain.chat_models import ChatOpenAI
+from langchain.chat_models import AzureChatOpenAI
 from langchain.chains import LLMChain
 from .qaprompts import select_paper_prompt, make_chain
 
@@ -156,7 +156,7 @@ def make_tools(docs, answer):
 
 def run_agent(docs, question, llm=None):
     if llm is None:
-        llm = ChatOpenAI(temperature=0.1, model="gpt-4")
+        llm = AzureChatOpenAI(temperature=0.1, model="gpt-4")
     answer = Answer(question)
     tools = make_tools(docs, answer)
     mrkl = initialize_agent(

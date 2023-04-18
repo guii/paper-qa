@@ -3,7 +3,7 @@ import requests
 import os
 import pickle
 from paperqa.utils import strings_similarity
-from langchain.llms import OpenAI
+from langchain.llms import AzureOpenAI
 from unittest import IsolatedAsyncioTestCase
 
 
@@ -27,7 +27,7 @@ def test_docs():
         # get front page of wikipedia
         r = requests.get("https://en.wikipedia.org/wiki/National_Flag_of_Canada_Day")
         f.write(r.text)
-    llm = OpenAI(temperature=0.1, model_name="text-ada-001")
+    llm = AzureOpenAI(temperature=0.1, model_name="text-ada-001")
     docs = paperqa.Docs(llm=llm)
     docs.add(doc_path, "WikiMedia Foundation, 2023, Accessed now")
     assert docs.docs[doc_path]["key"] == "Wiki2023"
@@ -95,7 +95,7 @@ def test_docs_pickle():
         # get front page of wikipedia
         r = requests.get("https://en.wikipedia.org/wiki/National_Flag_of_Canada_Day")
         f.write(r.text)
-    llm = OpenAI(temperature=0.0, model_name="text-babbage-001")
+    llm = AzureOpenAI(temperature=0.0, model_name="text-babbage-001")
     docs = paperqa.Docs(llm=llm)
     docs.add(doc_path, "WikiMedia Foundation, 2023, Accessed now", chunk_chars=1000)
     docs_pickle = pickle.dumps(docs)
@@ -142,7 +142,7 @@ def test_repeat_keys():
         # get wiki page about politician
         r = requests.get("https://en.wikipedia.org/wiki/Frederick_Bates_(politician)")
         f.write(r.text)
-    docs = paperqa.Docs(llm=OpenAI(temperature=0.0, model_name="text-ada-001"))
+    docs = paperqa.Docs(llm=AzureOpenAI(temperature=0.0, model_name="text-ada-001"))
     docs.add(doc_path, "WikiMedia Foundation, 2023, Accessed now")
     try:
         docs.add(doc_path, "WikiMedia Foundation, 2023, Accessed now")
@@ -169,7 +169,7 @@ def test_repeat_keys():
 def test_pdf_reader():
     tests_dir = os.path.dirname(os.path.abspath(__file__))
     doc_path = os.path.join(tests_dir, "paper.pdf")
-    docs = paperqa.Docs(llm=OpenAI(temperature=0.0, model_name="text-curie-001"))
+    docs = paperqa.Docs(llm=AzureOpenAI(temperature=0.0, model_name="text-curie-001"))
     docs.add(doc_path, "Wellawatte et al, XAI Review, 2023")
     answer = docs.query("Are counterfactuals actionable?")
     assert "yes" in answer.answer or "Yes" in answer.answer
@@ -192,7 +192,7 @@ def test_doc_preview():
         # get wiki page about politician
         r = requests.get("https://en.wikipedia.org/wiki/Frederick_Bates_(politician)")
         f.write(r.text)
-    docs = paperqa.Docs(llm=OpenAI(temperature=0.0, model_name="text-ada-001"))
+    docs = paperqa.Docs(llm=AzureOpenAI(temperature=0.0, model_name="text-ada-001"))
     docs.add(doc_path, "WikiMedia Foundation, 2023, Accessed now")
     assert len(docs.doc_previews()) == 1
 
