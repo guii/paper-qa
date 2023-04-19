@@ -75,9 +75,9 @@ class Docs:
         if llm is None:
             llm = "gpt-3.5-turbo"
         if type(llm) is str:
-            llm = AzureChatOpenAI(deployment_name="gpt-4", model_name="gpt-4",temperature=0.1, model=llm)
+            llm = AzureChatOpenAI(engine="gpt-35-turbo", model=llm,temperature=0.1)
         if type(summary_llm) is str:
-            summary_llm = AzureChatOpenAI(deployment_name="gpt-4", model_name="gpt-4",temperature=0.1, model=summary_llm)
+            summary_llm = AzureChatOpenAI(engine="gpt-35-turbo", model=summary_llm,temperature=0.1,)
         self.llm = llm
         if summary_llm is None:
             summary_llm = llm
